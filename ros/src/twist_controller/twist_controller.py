@@ -51,9 +51,9 @@ class Controller(object):
         
         current_vel = self.vel_lpf.filt(current_vel)
 
-        rospy.logwarn("Angular vel: {0}".format(angular_vel))
-        rospy.logwarn("Current vel: {0}".format(current_vel))
-        rospy.logwarn("Target vel: {0}".format(linear_vel))       
+        # rospy.logwarn("Angular vel: {0}".format(angular_vel))
+        # rospy.logwarn("Current vel: {0}".format(current_vel))
+        # rospy.logwarn("Target vel: {0}".format(linear_vel))       
 
         steering = self.yaw_controller.get_steering(linear_vel, angular_vel, current_vel)
         # could add damping --> based on target_ang_vel - current_ang_vel
