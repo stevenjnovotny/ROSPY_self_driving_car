@@ -66,7 +66,7 @@ class TLDetector(object):
             self.waypoint_tree = KDTree(self.waypoints_2d)
 
     def traffic_cb(self, msg):
-        rospy.loginfo('light --  color:' % msg.lights.state)
+        rospy.loginfo('light --  color:', msg.lights)
         self.lights = msg.lights
 
     def image_cb(self, msg):
