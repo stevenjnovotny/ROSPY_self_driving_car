@@ -182,6 +182,7 @@ class TLDetector(object):
 
             
             if LOG_IMAGES and dist < 40 and (self.log_counter % LOGGING_FREQ == 0):
+                cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
                 save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
                 cv2.imwrite(save_file, cv_image)
 
