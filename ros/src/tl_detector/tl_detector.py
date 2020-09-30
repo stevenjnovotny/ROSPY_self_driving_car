@@ -180,7 +180,7 @@ class TLDetector(object):
 
             rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
 
-            return light_wp_idx, state
+            return line_wp_idx, state
 
         self.waypoints = None
         return -1, TrafficLight.UNKNOWN
