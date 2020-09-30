@@ -132,7 +132,7 @@ class TLDetector(object):
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
         if LOG_IMAGES:
-            save_file = "../../../imgs/{}-{:.0f}.jpeg".format(self.to_string(light.state), (time.time() * 100))
+            save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(light.state), (time.time() * 100))
             cv2.imwrite(save_file, cv_image)
 
 
@@ -175,12 +175,12 @@ class TLDetector(object):
                     line_wp_idx = temp_wp_idx
                     dist = diff
 
-        if light:
-            state = self.get_light_state(light)
+        if closest_light:
+            state = self.get_light_state(closest_light)
 
-            rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, self.lights[0].state)))
+            rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
 
-            return light_wp, state
+            return light_wp_idx, state
 
         self.waypoints = None
         return -1, TrafficLight.UNKNOWN
