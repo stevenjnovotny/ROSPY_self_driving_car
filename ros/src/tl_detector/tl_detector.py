@@ -15,7 +15,7 @@ from scipy.spatial import KDTree
 import time
 
 STATE_COUNT_THRESHOLD = 3
-LOGGING_FREQ = 10
+LOGGING_FREQ = 3
 LOG_IMAGES = True
 
 
@@ -181,7 +181,7 @@ class TLDetector(object):
             rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
 
             
-            if LOG_IMAGES and dist < 40 and (self.log_counter % LOGGING_FREQ == 0):
+            if LOG_IMAGES and dist < 150 and (self.log_counter % LOGGING_FREQ == 0):
                 cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
                 save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
                 cv2.imwrite(save_file, cv_image)
