@@ -86,7 +86,7 @@ class WaypointUpdater(object):
 
     def waypoints_cb(self, waypoints):  # happens only once
         self.base_waypoints = waypoints
-        rospy.loginfo('------ loaded base waypoints ------')
+        rospy.loginfo('------ <waypoint_updater> loaded base waypoints ------')
         if not self.waypoints_2d:   # makes sure self.waypoints_2d is initialized before subscriber
             self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
             self.waypoint_tree = KDTree(self.waypoints_2d)
