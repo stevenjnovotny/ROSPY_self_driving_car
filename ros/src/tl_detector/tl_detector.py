@@ -18,6 +18,7 @@ STATE_COUNT_THRESHOLD = 3
 LOGGING_FREQ = 10
 LOG_IMAGES = True
 
+
 class TLDetector(object):
     def __init__(self):
         rospy.init_node('tl_detector')
@@ -27,6 +28,8 @@ class TLDetector(object):
         self.camera_image = None
         self.lights = []
         self.waypoints_2d = None
+
+        self.log_counter = 0
 
         sub1 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub2 = rospy.Subscriber('/base_waypoints', Lane, self.waypoints_cb)
@@ -131,11 +134,6 @@ class TLDetector(object):
 
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
-        if LOG_IMAGES:
-            save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(light.state), (time.time() * 100))
-            cv2.imwrite(save_file, cv_image)
-
-
         #Get classification
         return self.light_classifier.get_classification(cv_image)
 
@@ -175,10 +173,18 @@ class TLDetector(object):
                     line_wp_idx = temp_wp_idx
                     dist = diff
 
+        self.log_counter += 1
+
         if closest_light:
             state = self.get_light_state(closest_light)
 
             rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
+
+            
+            if LOG_IMAGES and dist < 40 and (self.log_counter % LOGGING_FREQ == 0):
+                save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
+                cv2.imwrite(save_file, cv_image)
+
 
             return line_wp_idx, state
 
