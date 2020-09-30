@@ -12,6 +12,7 @@ import cv2
 import yaml
 
 from scipy.spatial import KDTree
+import time
 
 STATE_COUNT_THRESHOLD = 3
 LOGGING_FREQ = 10
