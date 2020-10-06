@@ -6,6 +6,7 @@ import time
 from scipy.stats import norm, mode
 
 import os
+import rospy
 
 
 class TLClassifier(object):
