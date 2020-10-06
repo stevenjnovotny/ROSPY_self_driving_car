@@ -5,25 +5,33 @@ import numpy as np
 import time
 from scipy.stats import norm, mode
 
+import os
+
+
 class TLClassifier(object):
     def __init__(self):
-
-        GRAPH_FILE = 'frozen_inference_graph.pb'
         
-        self.detection_graph = self.load_graph(GRAPH_FILE)
+        GRAPH_FILE = 'frozen_inference_graph.pb'
+
+        model_path = os.path.dirname(os.path.realpath(__file__))
+
+        model_path = os.path.join(model_path, GRAPH_FILE)
+        rospy.logwarn("model_path={}".format(model_path))
+        
+        self.detection_graph = self.load_graph(model_path)
 
         # `get_tensor_by_name` returns the Tensor with the associated name in the Graph.
-        self.image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
+        self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
 
         # Each box represents a part of the image where a particular object was detected.
-        self.detection_boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
+        self.detection_boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
 
         # Each score represent how level of confidence for each of the objects.
         # Score is shown on the result image, together with the class label.
-        self.detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
+        self.detection_scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
 
         # The classification of the object (integer id).
-        self.detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
+        self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
 
 
     def load_graph(self, graph_file):
@@ -53,7 +61,7 @@ class TLClassifier(object):
 
         image_np = np.expand_dims(np.asarray(image, dtype=np.uint8), 0)
 
-        with tf.Session(graph=detection_graph) as sess:                
+        with tf.Session(graph=self.detection_graph) as sess:                
             # Actual detection.
             (boxes, scores, classes) = sess.run([self.detection_boxes, self.detection_scores, self.detection_classes], 
                                                 feed_dict={self.image_tensor: image_np})
