@@ -34,6 +34,19 @@ class TLClassifier(object):
         # The classification of the object (integer id).
         self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
 
+    def filter_boxes(min_score, boxes, scores, classes):
+        """Return boxes with a confidence >= `min_score`"""
+        n = len(classes)
+        # print('number of classes = %d' % n)
+        idxs = []
+        for i in range(n):
+            if scores[i] >= min_score:
+                idxs.append(i)
+    
+        filtered_boxes = boxes[idxs, ...]
+        filtered_scores = scores[idxs, ...]
+        filtered_classes = classes[idxs, ...]
+        return filtered_boxes, filtered_scores, filtered_classes
 
     def load_graph(self, graph_file):
         """Loads a frozen inference graph"""
