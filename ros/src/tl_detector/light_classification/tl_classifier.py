@@ -34,7 +34,7 @@ class TLClassifier(object):
         # The classification of the object (integer id).
         self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
 
-    def filter_boxes(min_score, boxes, scores, classes):
+    def filter_boxes(self, min_score, boxes, scores, classes):
         """Return boxes with a confidence >= `min_score`"""
         n = len(classes)
         # print('number of classes = %d' % n)
@@ -88,7 +88,7 @@ class TLClassifier(object):
 
             confidence_cutoff = 0.6
             # Filter boxes with a confidence score less than `confidence_cutoff`
-            boxes, scores, classes = filter_boxes(confidence_cutoff, boxes, scores, classes)
+            boxes, scores, classes = self.filter_boxes(confidence_cutoff, boxes, scores, classes)
 
             options = [TrafficLight.GREEN, TrafficLight.RED, TrafficLight.YELLOW, TrafficLight.UNKNOWN]
 
