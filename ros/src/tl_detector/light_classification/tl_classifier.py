@@ -61,6 +61,15 @@ class TLClassifier(object):
                 tf.import_graph_def(od_graph_def, name='')
         return graph
 
+    def to_string(self, state):
+        out = "unknown"
+        if state == TrafficLight.GREEN:
+            out = "green"
+        elif state == TrafficLight.YELLOW:
+            out = "yellow"
+        elif state == TrafficLight.RED:
+            out = "red"
+        return out
 
     def get_classification(self, image):
         """Determines the color of the traffic light in the image
@@ -96,7 +105,7 @@ class TLClassifier(object):
                 result = options[int(mode(classes)[0][0])-1]
 
                 # colors = [red, yellow, green, unknown]    
-                rospy.loginfo("upcoming light:", result)
+                rospy.loginfo("upcoming light:", self.to_string(result))
 
                 return result
 
