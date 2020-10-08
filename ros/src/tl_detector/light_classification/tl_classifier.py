@@ -92,7 +92,7 @@ class TLClassifier(object):
 
             options = [TrafficLight.GREEN, TrafficLight.RED, TrafficLight.YELLOW, TrafficLight.UNKNOWN]
 
-            if classes != None and len(classes) != 0:
+            if len(classes) != 0:
                 result = options[int(mode(classes)[0][0])-1]
 
                 # colors = [red, yellow, green, unknown]    
