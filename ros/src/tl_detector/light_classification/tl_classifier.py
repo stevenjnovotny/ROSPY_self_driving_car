@@ -105,7 +105,7 @@ class TLClassifier(object):
                 result = options[int(mode(classes)[0][0])-1]
 
                 # colors = [red, yellow, green, unknown]    
-                rospy.loginfo("upcoming light:", self.to_string(result))
+                rospy.loginfo("upcoming light={}".format(self.to_string(result)))
 
                 return result
 
