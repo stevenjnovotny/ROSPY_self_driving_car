@@ -17,7 +17,7 @@ class TLClassifier(object):
         model_path = os.path.dirname(os.path.realpath(__file__))
 
         model_path = os.path.join(model_path, GRAPH_FILE)
-        rospy.logwarn("model_path={}".format(model_path))
+        rospy.loginfo("model_path={}".format(model_path))
         
         self.detection_graph = self.load_graph(model_path)
 
@@ -94,6 +94,10 @@ class TLClassifier(object):
 
             if classes != None and len(classes) != 0:
                 result = options[int(mode(classes)[0][0])-1]
+
+                # colors = [red, yellow, green, unknown]    
+                rospy.loginfo("upcoming light:", result)
+
                 return result
 
 

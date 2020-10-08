@@ -16,7 +16,7 @@ import time
 
 STATE_COUNT_THRESHOLD = 3
 LOGGING_FREQ = 3
-LOG_IMAGES = True
+LOG_IMAGES = False
 
 
 class TLDetector(object):
