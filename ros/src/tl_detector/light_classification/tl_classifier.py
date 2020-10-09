@@ -117,6 +117,6 @@ class TLClassifier(object):
 
                 return result
             else:
-                rospy.loginfo(str("unable to classify - [%s]" % tag)
+                rospy.loginfo(str("unable to classify - [%s]" % tag))
 
         return TrafficLight.UNKNOWN
