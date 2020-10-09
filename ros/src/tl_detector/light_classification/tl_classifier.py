@@ -83,10 +83,13 @@ class TLClassifier(object):
 
         """
 
+        rospy.loginfo("calling classifier on light"))
+        start = time.time()
         image_np = np.expand_dims(np.asarray(image, dtype=np.uint8), 0)
 
         with tf.Session(graph=self.detection_graph) as sess:                
             # Actual detection.
+
             (boxes, scores, classes) = sess.run([self.detection_boxes, self.detection_scores, self.detection_classes], 
                                                 feed_dict={self.image_tensor: image_np})
 
@@ -106,7 +109,8 @@ class TLClassifier(object):
                 result = options[int(mode(classes)[0][0])-1]
 
                 # colors = [red, yellow, green, unknown]    
-                rospy.loginfo("upcoming light={}".format(self.to_string(result)))
+                #rospy.loginfo("upcoming light={}".format(self.to_string(result), ))
+                rospy.loginfo(str('upcoming light classied as %s in %.3f s' % (self.to_string(result), time.time()-start)))
 
                 return result
 

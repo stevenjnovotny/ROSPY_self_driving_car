@@ -23,8 +23,9 @@ as well as to verify TL classifier.
 
 '''
 
-LOOKAHEAD_WPS = 200 # Number of waypoints to publish. Can be changed
+LOOKAHEAD_WPS = 100 # Number of waypoints to publish. Can be changed
 MAX_DECEL = 0.5
+PUBLISHING_RATE = 50
 
 
 class WaypointUpdater(object):
@@ -51,7 +52,7 @@ class WaypointUpdater(object):
         self.loop()
         
     def loop(self):
-        rate = rospy.Rate(50)
+        rate = rospy.Rate(PUBLISHING_RATE)
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
                 # get closest waypoint
@@ -115,7 +116,7 @@ class WaypointUpdater(object):
 
             stop_idx = max(self.stopline_wp_idx - closest_idx - 2, 0)  # two waypoints back from stop line (center of car)
             dist = self.distance(waypoints, i, stop_idx)
-            vel - math.sqrt(2 * MAX_DECEL * dist)
+            vel = math.sqrt(2 * MAX_DECEL * dist)
             if vel < 1.:
                 vel = 0.
 
@@ -138,7 +139,11 @@ class WaypointUpdater(object):
 
     def traffic_cb(self, msg):
         # Callback for /traffic_waypoint message. Implement
-        self.stopline_wp_idx = msg.data
+        #self.stopline_wp_idx = msg.data
+        if self.stopline_wp_idx != msg.data:
+            rospy.logwarn(
+                "LIGHT: new stopline_wp_idx={}, old stopline_wp_idx={}".format(msg.data, self.stopline_wp_idx))
+            self.stopline_wp_idx = msg.data
 
     def obstacle_cb(self, msg):
         # TODO: Callback for /obstacle_waypoint message. We will implement it later
