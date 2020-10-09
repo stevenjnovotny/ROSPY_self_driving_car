@@ -42,7 +42,7 @@ class WaypointUpdater(object):
         # other member variables
         self.base_lane = None 
         self.pose = None
-        self.base_waypoints = None
+        #self.base_waypoints = None
         self.waypoints_2d = None
         self.waypoints_tree = None 
         self.stopline_wp_idx = -1
@@ -53,10 +53,11 @@ class WaypointUpdater(object):
     def loop(self):
         rate = rospy.Rate(50)
         while not rospy.is_shutdown():
-            if self.pose and self.base_waypoints:
+            if self.pose and self.base_lane:
                 # get closest waypoint
-                closest_waypoint_idx = self.get_closest_waypoint_idx()
-                self.publish_waypoints(closest_waypoint_idx)
+                # closest_waypoint_idx = self.get_closest_waypoint_idx()
+                # self.publish_waypoints(closest_waypoint_idx)
+                self.publish_waypoints()
             rate.sleep()
             
     def get_closest_waypoint_idx(self):
@@ -80,13 +81,14 @@ class WaypointUpdater(object):
             closest_idx = (closest_idx+1) % len(self.waypoints_2d)
         return closest_idx
     
-    def publish_waypoints(self, closest_idx):
+    # def publish_waypoints(self, closest_idx):
         # lane = Lane() # make Lane type message
         # # rospy.loginfo('--------got idx -------------')
         # lane.header = self.base_waypoints.header
         # lane.waypoints = self.base_waypoints.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]
         # self.final_waypoints_pub.publish(lane)
-
+    
+    def publish_waypoints(self):
         final_lane = self.generate_lane()
         self.final_waypoints_pub.publish(final_lane)
 
@@ -126,7 +128,8 @@ class WaypointUpdater(object):
         self.pose = msg   # grabbing the pose
 
     def waypoints_cb(self, waypoints):  # happens only once
-        self.base_waypoints = waypoints
+        #self.base_waypoints = waypoints
+        self.base_lane = waypoints
         rospy.loginfo('------ <waypoint_updater> loaded base waypoints ------')
         if not self.waypoints_2d:   # makes sure self.waypoints_2d is initialized before subscriber
             self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
