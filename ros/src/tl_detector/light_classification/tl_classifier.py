@@ -73,7 +73,7 @@ class TLClassifier(object):
             out = "red"
         return out
 
-    def get_classification(self, image):
+    def get_classification(self, image, tag):
         """Determines the color of the traffic light in the image
 
         Args:
@@ -84,7 +84,7 @@ class TLClassifier(object):
 
         """
 
-        tag = "{:.0f}".format(time.time())[-3:]
+        # tag = "{:.0f}".format(time.time())[-3:]
 
         rospy.loginfo(str("calling classifier on light - [%s]" % tag))
         start = time.time()
