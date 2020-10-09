@@ -180,7 +180,8 @@ class TLDetector(object):
             if dist < 250:
                 state = self.get_light_state(closest_light)
 
-                rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
+                if (self.log_counter % LOGGING_FREQ == 0):
+                    rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
 
                 
                 if LOG_IMAGES and (self.log_counter % LOGGING_FREQ == 0):
@@ -188,7 +189,7 @@ class TLDetector(object):
                     save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
                     cv2.imwrite(save_file, cv_image)
 
-
+                
                 return line_wp_idx, state
 
         return -1, TrafficLight.UNKNOWN
