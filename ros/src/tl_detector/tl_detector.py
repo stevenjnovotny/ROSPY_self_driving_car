@@ -191,7 +191,6 @@ class TLDetector(object):
 
                 return line_wp_idx, state
 
-        self.waypoints = None
         return -1, TrafficLight.UNKNOWN
     
     def to_string(self, state):

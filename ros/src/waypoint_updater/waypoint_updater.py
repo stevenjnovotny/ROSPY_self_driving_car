@@ -107,7 +107,7 @@ class WaypointUpdater(object):
         return lane
 
     def decelerate_waypoints(self, waypoints, closest_idx):
-        rospy.loginfo('------ <waypoint_updater> decelerating ------')
+        #rospy.loginfo('------ <waypoint_updater> decelerating ------')
         temp = []
         for i, wp in enumerate(waypoints):
 
