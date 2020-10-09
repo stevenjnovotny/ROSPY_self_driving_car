@@ -86,7 +86,7 @@ class TLDetector(object):
 
         """
 
-        if self.image_counter % 3 == 0:
+        if self.image_counter % 3 == 0:  # attempt to avoid lag issues
 
             self.has_image = True
             self.camera_image = msg
@@ -102,13 +102,13 @@ class TLDetector(object):
                 self.state_count = 0
                 self.state = state
             elif self.state_count >= STATE_COUNT_THRESHOLD:
-                rospy.loginfo("state count threshold reached")
+                #rospy.loginfo("state count threshold reached")
                 self.last_state = self.state
                 light_wp = light_wp if state == TrafficLight.RED else -1
                 self.last_wp = light_wp
                 self.upcoming_red_light_pub.publish(Int32(light_wp))
             else:
-                rospy.loginfo("state count threshold NOT reached")
+                #rospy.loginfo("state count threshold NOT reached")
                 self.upcoming_red_light_pub.publish(Int32(self.last_wp))
             self.state_count += 1
 
