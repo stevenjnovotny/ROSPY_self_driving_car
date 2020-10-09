@@ -83,7 +83,7 @@ class TLClassifier(object):
 
         """
 
-        rospy.loginfo("calling classifier on light"))
+        rospy.loginfo("calling classifier on light")
         start = time.time()
         image_np = np.expand_dims(np.asarray(image, dtype=np.uint8), 0)
 
