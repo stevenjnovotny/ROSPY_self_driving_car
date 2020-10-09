@@ -35,7 +35,6 @@ class TLClassifier(object):
         # The classification of the object (integer id).
         self.detection_classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
 
-        self.classification_counter = 0
 
     def filter_boxes(self, min_score, boxes, scores, classes):
         """Return boxes with a confidence >= `min_score`"""
@@ -85,7 +84,7 @@ class TLClassifier(object):
 
         """
 
-        tag = "{:.4f}".format(time.time())[-4:]
+        tag = "{:.0f}".format(time.time())[-3:]
 
         rospy.loginfo(str("calling classifier on light - [%s]" % tag))
         start = time.time()
@@ -118,8 +117,6 @@ class TLClassifier(object):
 
                 return result
             else:
-                rospy.loginfo(str("unable to classify - [%d]" % self.classification_counter))
-
-            self.classification_counter += 1
+                rospy.loginfo(str("unable to classify - [%s]" % tag)
 
         return TrafficLight.UNKNOWN
