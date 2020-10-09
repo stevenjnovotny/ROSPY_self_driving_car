@@ -28,6 +28,7 @@ class TLDetector(object):
         self.camera_image = None
         self.lights = []
         self.waypoints_2d = None
+        self.waypoint_tree = None
 
         self.log_counter = 0
 
