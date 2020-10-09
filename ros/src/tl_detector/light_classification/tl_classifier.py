@@ -20,6 +20,7 @@ class TLClassifier(object):
         rospy.loginfo("model_path={}".format(model_path))
         
         self.detection_graph = self.load_graph(model_path)
+        rospy.loginfo("model loaded")
 
         # `get_tensor_by_name` returns the Tensor with the associated name in the Graph.
         self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
