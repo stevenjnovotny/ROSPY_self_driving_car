@@ -177,13 +177,13 @@ class TLDetector(object):
         self.log_counter += 1
 
         if closest_light:
-            if dist < 200:
+            if dist < 250 and (self.log_counter % LOGGING_FREQ == 0):
                 state = self.get_light_state(closest_light)
 
                 rospy.loginfo(str('--- upcoming light --- dist: %.1f    color: %r' % (dist, closest_light.state)))
 
                 
-                if LOG_IMAGES and (self.log_counter % LOGGING_FREQ == 0):
+                if LOG_IMAGES :
                     cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
                     save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
                     cv2.imwrite(save_file, cv_image)

@@ -85,7 +85,9 @@ class TLClassifier(object):
 
         """
 
-        rospy.loginfo(str("calling classifier on light - [%d]" % self.classification_counter))
+        tag = "{:.4f}".format(time.time())[-4:]
+
+        rospy.loginfo(str("calling classifier on light - [%s]" % tag))
         start = time.time()
         image_np = np.expand_dims(np.asarray(image, dtype=np.uint8), 0)
 
@@ -112,7 +114,7 @@ class TLClassifier(object):
 
                 # colors = [red, yellow, green, unknown]    
                 #rospy.loginfo("upcoming light={}".format(self.to_string(result), ))
-                rospy.loginfo(str('upcoming light classied as %s in %.3f s  - [%d]' % (self.to_string(result), time.time()-start, self.classification_counter)))
+                rospy.loginfo(str('upcoming light classied as %s in %.3f s  - [%s]' % (self.to_string(result), time.time()-start, tag)))
 
                 return result
             else:
