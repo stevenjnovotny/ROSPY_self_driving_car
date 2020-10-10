@@ -51,6 +51,7 @@ class TLDetector(object):
 
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
 
+
         self.bridge = CvBridge()
         self.light_classifier = TLClassifier()
         self.listener = tf.TransformListener()
@@ -91,6 +92,10 @@ class TLDetector(object):
             self.has_image = True
             self.camera_image = msg
             light_wp, state = self.process_traffic_lights()
+
+            if self.image_counter == 0:
+                rospy.loginfo("first image state: {}".format(state))
+                self.upcoming_red_light_pub.publish(Int32(light_wp))
 
             '''
             Publish upcoming red lights at camera frequency.

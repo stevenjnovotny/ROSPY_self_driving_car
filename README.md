@@ -33,9 +33,9 @@ The models were retrained on images captured through the simulator using tl_dete
 3. Label mapping was established through the *.pbtxt file.
 4. The pretrained model's *.config file was modified to specify the details of the re-training.
 5. The model was re-trained using TensorFlow's object_detection/train.py code. e.g. 
-'''bash
+```bash
 python train.py  --logtostderr --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config.config
-'''
+```
 6. The output from the last training checkpoint was used to create a file of frozen weights, e.g.
 ```
 python export_inference_graph.py \
@@ -45,7 +45,7 @@ python export_inference_graph.py \
     --output_directory=trained_models/trained_mn_model_6113/
 ```
 
-The results produced pros and cons for each model. The faster_rcnn_resnet101 model was more accurate and more reliable, but the model file was 190 MB and took >15 s to classify on the simulator. Perhaps on a real system (with a GPU) this would not take so long, but this made faster_rcnn_resnet101 impractical for this project. The ssd_mobilenet model, on the otherhand, was less reliable (not as consistently accurate) but was only 20 MB in size and classified in <0.7 s. Ultimately I chose to go with the ssd_mobilenet.
+The results produced pros and cons for each model. The faster_rcnn_resnet101 model was more accurate and more reliable, but the model file was 190 MB and took >15 s to classify on the simulator. Perhaps on a real system (with a GPU) this would not take so long. Regardless, this speed issue made faster_rcnn_resnet101 impractical for this project. The ssd_mobilenet model, on the otherhand, was less reliable (not as consistently accurate) but was only 20 MB in size and classified in <0.7 s. Ultimately I chose to go with the ssd_mobilenet.
 
 An example of a test classification is shown below. The first is with faster_rcnn_resnet101 and the second is with ssd_mobilenet.
 
@@ -58,6 +58,16 @@ An example of a test classification is shown below. The first is with faster_rcn
 The approach implemented here represents a strategy using a provided waypoint list and creating trajectories based on selecting a subsection of that list. The waypoints are selected based on desired velocity, desired lane position, and traffic light conditions. A video showing the simulation (including selected waypoints and response to a traffic light) is given below.
 
 ![](imgs/demo_tl_response.mov)
+
+<br>
+
+---
+
+## Conclusions
+- The lag in the simulator made it difficult to evaluate the effectiveness of the stop light detector and classifier. As can be seen in the video, there is a significant lag between the light changing to green and the car begining its acceleration. Perhaps a better GPU would eliminate this issue.
+
+- It was interesting to see first hand the tradeoffs between faster_rcnn_resnet101 and ssd_mobilenet. Again, with a stronger processor and GPU perhaps the more capable classifier would have provided a more robust solution--particulary important if this software was deployed on a real vehicle in a real environment. 
+
 
 <br>
 
