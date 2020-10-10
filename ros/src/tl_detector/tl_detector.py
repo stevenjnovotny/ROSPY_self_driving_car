@@ -205,7 +205,7 @@ class TLDetector(object):
                     save_file = "../../../imgs/sim_images/{}-{:.0f}.jpeg".format(self.to_string(closest_light.state), (time.time() * 100))
                     cv2.imwrite(save_file, cv_image)
 
-                if state == TrafficLight.UNKNOWN:  # assume red if cannot calssify
+                if dist < 50 and state == TrafficLight.UNKNOWN:  # assume red if cannot calssify
                     state = TrafficLight.RED
                 
                 return line_wp_idx, state
