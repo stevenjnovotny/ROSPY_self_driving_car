@@ -14,7 +14,7 @@ import yaml
 from scipy.spatial import KDTree
 import time
 
-STATE_COUNT_THRESHOLD = 3
+STATE_COUNT_THRESHOLD = 2
 LOGGING_FREQ = 3
 LOG_IMAGES = False
 
@@ -55,8 +55,8 @@ class TLDetector(object):
         self.light_classifier = TLClassifier()
         self.listener = tf.TransformListener()
 
-        self.state = TrafficLight.UNKNOWN
-        self.last_state = TrafficLight.UNKNOWN
+        self.state = TrafficLight.RED
+        self.last_state = TrafficLight.RED
         self.last_wp = -1
         self.state_count = 0
 
