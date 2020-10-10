@@ -55,7 +55,7 @@ An example of a test classification is shown below. The first is with faster_rcn
 <br>
 
 ### Overall Approach
-The approach implemented here represents a strategy using a provided waypoint list and creating trajectories based on selecting a subsection of that list. The waypoints are selected based on desired velocity, desired lane position, and traffic light conditions. A video showing the simulation (including selected waypoints and response to a traffic light) is given below.
+The approach implemented here represents a strategy using a provided waypoint list and creating trajectories based on selecting a subsection of that list. The waypoints are selected based on desired velocity, desired lane position, and traffic light conditions. A video showing the simulation (including selected waypoints and response to a traffic light) is given  in imgs/demo_tl_response.mov
 
 ![](imgs/demo_tl_response.mov)
 
